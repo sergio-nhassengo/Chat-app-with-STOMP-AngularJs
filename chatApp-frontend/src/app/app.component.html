@@ -1,0 +1,51 @@
+<div class="container">
+  <div class="py-5 text-center">
+    <a href=""><h2>Websocket</h2></a>
+    <p class="lead">Websocket Chat - with STOMP & SockJS.</p>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="mb-3">
+        <div class="input-group">
+          <input type="text" id="from" name="from" class="form-control" placeholder="Choose a nickname" [(ngModel)]="username" [disabled]="isConnected"/>
+          <div class="btn-group">
+            <button type="button" class="btn btn-sm btn-outline-secondary" (click)="connect()"  [disabled]="isConnected">Connect</button>
+            <button type="button" class="btn btn-sm btn-outline-secondary" (click)="disconnect()"  [disabled]="!isConnected">Disconnect</button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="isConnected">
+        <div class="mb-3">
+          <span id="active-users-span">Username</span>
+          <ul id="active-users" class="list-group list-group-horizontal-sm">
+            <li class="list-group-item">
+              <a href="" class="active-user">{{connectedUser}}</a>
+            </li>
+          </ul>
+        </div>
+        <div class="mb-3" id="divSelectedUser">
+          <span id="selectedUser" class="badge badge-secondary">SelectedUser</span>
+        </div>
+        <div class="mb-3">
+          <div class="input-group" id="sendmessage">
+            <input type="text" name="message" id="message" class="form-control" placeholder="Message">
+            <div class="input-group-append">
+              <button id="send" class="btn btn-primary">Send</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6" *ngIf="isConnected">
+      <div id="content" class="alert alert-info">{{content}}</div>
+      <div>
+        <span class="float-right">
+          <button id="clear" class="btn btn-primary">Clear</button>
+        </span>
+      </div>
+      <div id="response"></div>
+    </div>
+  </div>
+</div>
