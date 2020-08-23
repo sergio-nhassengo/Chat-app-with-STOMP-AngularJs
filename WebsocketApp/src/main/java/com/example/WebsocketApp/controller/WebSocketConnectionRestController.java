@@ -45,8 +45,8 @@ public class WebSocketConnectionRestController {
         return "disconnected";
     }
 	
-	@GetMapping("/rest/active-users-except/{userName}")
-    public Set<String> getActiveUsersExceptCurrentUser(@PathVariable String userName) {
-        return activeSessionManager.getActiveUsersExceptCurrentUser(userName);
+	@GetMapping("/rest/active-users-except/{username}")
+    public Set<String> getActiveUsersExceptCurrentUser(@PathVariable String username) {
+        return activeSessionManager.getActiveUsersExceptCurrentUser(username);
     }
 }
