@@ -29,16 +29,16 @@
         </div>
         <div class="mb-3">
           <div class="input-group" id="sendmessage">
-            <input type="text" name="message" id="message" class="form-control" placeholder="Message">
+            <input type="text" name="message" id="message" class="form-control" placeholder="Message" [(ngModel)]="message">
             <div class="input-group-append">
-              <button id="send" class="btn btn-primary">Send</button>
+              <button id="send" class="btn btn-primary" (click)="sendMessage()">Send</button>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="col-md-6" *ngIf="isConnected">
+    <div class="col-md-6" >
       <div id="content" class="alert alert-info">{{content}}</div>
       <div>
         <span class="float-right">
