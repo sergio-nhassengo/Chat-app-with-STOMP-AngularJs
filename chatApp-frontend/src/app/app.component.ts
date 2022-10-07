@@ -32,7 +32,7 @@ export class AppComponent implements OnInit{
   }
 
   public handleMessage(message) {
-    this.content = message.text;
+    this.content = message;
     console.log(this.content)
   }
 

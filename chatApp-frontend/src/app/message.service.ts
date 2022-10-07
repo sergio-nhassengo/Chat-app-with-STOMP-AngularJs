@@ -5,28 +5,25 @@ declare var Stomp;
 
 export class MessageService {
 
-  url: string = 'http://localhost:8080';
+  url: string = 'http://localhost:8380';
   stompClient: any;
 
   appComponent: AppComponent;
 
-  constructor(appComponent: AppComponent){
-      this.appComponent = appComponent;
+  constructor(appComponent: AppComponent) {
+    this.appComponent = appComponent;
   }
 
   connect(username: string) {
-    let ws = new SockJS(this.url + "/chat");
+    let ws = new SockJS(this.url + "/websocket");
     this.stompClient = Stomp.over(ws);
     const _this = this;
     _this.stompClient.connect({ username: username }, function (frame) {
-      _this.stompClient.subscribe('/topic/broadcast', function () {
-        // _this.updateUsers(username);
+      _this.stompClient.subscribe('/topic/positions', function (message) {
+
       });
-      _this.stompClient.subscribe('/topic/active', function (message) {
-        _this.onMessageReceived(message);
-      });
-      _this.stompClient.subscribe('/user/queue/messages', function (message) {
-        _this.onMessageReceived(message);
+
+      _this.stompClient.subscribe(`/user/${username}/deal`, function (message) {
       });
 
       _this.sendConnection(username, 'connected to server');
@@ -35,14 +32,13 @@ export class MessageService {
   }
 
   disconnect() {
-    if(this.stompClient != null) {
+    if (this.stompClient != null) {
       this.stompClient.disconnect();
     }
   }
 
   onMessageReceived(message) {
-    console.log("Message Recieved from Server :: " + message);
-    this.appComponent.handleMessage(JSON.parse(message.body));
+    console.log(message);
   }
 
   sendConnection(username, message) {
@@ -59,9 +55,9 @@ export class MessageService {
 
   sendMessage(from, to, message) {
     this.stompClient.send(
-      "/app/chat", 
-      {'sender': from}, 
-      JSON.stringify({'from': from, 'text': message, 'recipient': to})
+      "/app/chat",
+      { 'sender': from },
+      JSON.stringify({ 'from': from, 'text': message, 'recipient': to })
     );
   }
 
